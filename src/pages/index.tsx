@@ -1,12 +1,18 @@
+import styled from '@emotion/styled'
 import { useState } from 'react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from 'react-beautiful-dnd'
 
 const items = ['1', '2', '3', '4', '5']
 
 const SimpleDndExample = () => {
   const [list, setList] = useState(items)
 
-  const handleOnDragEnd = (result: any) => {
+  const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return
     const { source, destination } = result
     const item = list[source.index]
@@ -24,17 +30,14 @@ const SimpleDndExample = () => {
             {list.map((item, index) => (
               <Draggable key={item} draggableId={item} index={index}>
                 {(provided) => (
-                  <li
+                  <Card
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    style={{
-                      userSelect: 'none',
-                      ...provided.draggableProps.style,
-                    }}
+                    style={provided.draggableProps.style}
                   >
                     {item}
-                  </li>
+                  </Card>
                 )}
               </Draggable>
             ))}
@@ -45,5 +48,13 @@ const SimpleDndExample = () => {
     </DragDropContext>
   )
 }
+
+const Card = styled.li`
+  user-select: none;
+  cursor: pointer;
+  height: 3rem;
+  width: 10rem;
+  background-color: yellow;
+`
 
 export default SimpleDndExample
