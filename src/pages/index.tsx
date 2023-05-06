@@ -3,13 +3,13 @@ import { Title } from '@components/title'
 import { useEffect, useState } from 'react'
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  useEffect(() => setIsLoading(true), [])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  useEffect(() => setIsLoading(false), [])
 
   return (
     <div>
       <Title>Draggable Cards</Title>
-      {isLoading && <DraggableCards />}
+      {!isLoading && <DraggableCards />}
     </div>
   )
 }
