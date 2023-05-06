@@ -1,4 +1,4 @@
-import DraggableCards from '@components/draggable-cards/DraggableCards'
+import DraggableCards from '@components/draggable-cards'
 import styled from '@emotion/styled'
 import { useEffect, useState } from 'react'
 
