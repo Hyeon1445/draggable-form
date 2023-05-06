@@ -25,7 +25,7 @@
     "s-form-ui": "^0.1.13",
     "sass": "^1.59.3",
     "typescript": "5.0.2",
-    "yup": "^1.0.2"
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@types/react-beautiful-dnd": "^13.1.4",
