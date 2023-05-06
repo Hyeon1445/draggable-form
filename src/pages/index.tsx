@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   DragDropContext,
   Droppable,
@@ -9,8 +9,11 @@ import {
 
 const items = ['1', '2', '3', '4', '5']
 
-const SimpleDndExample = () => {
+const Home = () => {
   const [list, setList] = useState<Array<string>>(items)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  useEffect(() => setIsLoading(true), [])
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return
@@ -23,32 +26,36 @@ const SimpleDndExample = () => {
   }
 
   return (
-    <>
+    <div>
       <Title>Draggable Cards</Title>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="list">
-          {(provided) => (
-            <CardContainer {...provided.droppableProps} ref={provided.innerRef}>
-              {list.map((item, index) => (
-                <Draggable key={item} draggableId={item} index={index}>
-                  {(provided) => (
-                    <Card
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={provided.draggableProps.style}
-                    >
-                      {item}
-                    </Card>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </CardContainer>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </>
+      {isLoading && (
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="list">
+            {(provided) => (
+              <CardContainer
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {list.map((item, index) => (
+                  <Draggable key={item} draggableId={item} index={index}>
+                    {(provided) => (
+                      <Card
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        {item}
+                      </Card>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </CardContainer>
+            )}
+          </Droppable>
+        </DragDropContext>
+      )}
+    </div>
   )
 }
 
@@ -59,12 +66,12 @@ const Card = styled.li`
   width: 10rem;
   background-color: teal;
   color: white;
+  margin: 0.5rem 0;
 `
 
 const CardContainer = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   margin: 1.5rem;
   background-color: #f2f2f2;
   padding: 1rem;
@@ -79,4 +86,4 @@ const Title = styled.p`
   padding: 1.5rem 1.5rem 0;
 `
 
-export default SimpleDndExample
+export default Home
