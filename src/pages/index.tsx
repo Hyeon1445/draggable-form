@@ -10,15 +10,15 @@ import {
 const items = ['1', '2', '3', '4', '5']
 
 const SimpleDndExample = () => {
-  const [list, setList] = useState(items)
+  const [list, setList] = useState<Array<string>>(items)
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return
-    const { source, destination } = result
-    const item = list[source.index]
+    const { source, destination } = result // source.index: 원위치, destination.index: 목적지
+    const item = list[source.index] // 이동할 item
     const newList = [...list]
-    newList.splice(source.index, 1)
-    newList.splice(destination.index, 0, item)
+    newList.splice(source.index, 1) // 이동할 item 삭제
+    newList.splice(destination.index, 0, item) // item 새 위치에 끼워넣기
     setList(newList)
   }
 
