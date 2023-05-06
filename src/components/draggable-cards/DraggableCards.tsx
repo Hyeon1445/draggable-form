@@ -39,7 +39,6 @@ const DraggableCards = () => {
                 )}
               </Draggable>
             ))}
-            {provided.placeholder}
           </S.CardContainer>
         )}
       </Droppable>
