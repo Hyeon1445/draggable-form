@@ -67,10 +67,11 @@ const InputListPage = () => {
                             <Field name={`items.${index}.name`}>
                               {({
                                 field,
-                                meta: { value },
+                                meta: { error },
                               }: FieldProps<string>) => (
                                 <Card
                                   ref={provided.innerRef}
+                                  hasError={!!error}
                                   {...provided.draggableProps}
                                 >
                                   <DragButton
@@ -100,11 +101,11 @@ const InputListPage = () => {
   )
 }
 
-const Card = styled.li`
+const Card = styled.li<{ hasError: boolean }>`
   user-select: none;
   height: 3rem;
   width: 10rem;
-  background-color: teal;
+  background-color: ${({ hasError }) => (hasError ? 'red' : 'teal')};
   color: white;
   margin: 0.5rem 0;
   display: flex;
