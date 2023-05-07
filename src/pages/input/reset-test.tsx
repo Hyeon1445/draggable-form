@@ -25,7 +25,7 @@ const InputTestPage = () => {
 
   return (
     <div>
-      <Title>Draggable Inputs</Title>
+      <Title>Draggable Inputs - Reset Test</Title>
       <Formik
         initialValues={testValues}
         validationSchema={yup.object().shape({
