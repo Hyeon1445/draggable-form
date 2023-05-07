@@ -1,6 +1,6 @@
 import { Title } from '@components/title'
 import styled from '@emotion/styled'
-import { Formik, Form } from 'formik'
+import { Formik, Form, Field, FieldProps } from 'formik'
 import { useEffect, useState } from 'react'
 import {
   DragDropContext,
@@ -63,7 +63,11 @@ const InputListPage = () => {
                               >
                                 menu
                               </DragButton>
-                              {item}
+                              <Field name={`items.${index}`}>
+                                {({ meta: { value } }: FieldProps<string>) => (
+                                  <Input value={value} />
+                                )}
+                              </Field>
                             </Card>
                           )}
                         </Draggable>
@@ -117,6 +121,12 @@ const Button = styled.button`
   height: 2rem;
   width: 5rem;
   margin: 1rem auto 0;
+`
+
+const Input = styled.input`
+  height: 2rem;
+  width: 6rem;
+  padding: 0 0.5rem;
 `
 
 export default InputListPage
