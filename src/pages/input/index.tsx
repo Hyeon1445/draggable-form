@@ -11,7 +11,9 @@ import {
 import * as yup from 'yup'
 
 const initialValues = {
-  items: ['name1', 'name2', 'name3', 'name4'],
+  items: Array.from(Array(5), (_, index) => {
+    return { id: index, name: `name${index}` }
+  }),
 }
 
 const InputListPage = () => {
@@ -24,7 +26,12 @@ const InputListPage = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={yup.object().shape({
-          items: yup.array().of(yup.string().required('필수 입력값입니다.')),
+          items: yup.array().of(
+            yup.object().shape({
+              id: yup.number(),
+              name: yup.string().required('필수 입력값입니다.'),
+            })
+          ),
         })}
         onSubmit={(values) => {
           console.log(values)
@@ -51,24 +58,31 @@ const InputListPage = () => {
                       ref={provided.innerRef}
                     >
                       {values.items.map((item, index) => (
-                        <Draggable key={item} draggableId={item} index={index}>
+                        <Draggable
+                          key={item.id}
+                          draggableId={`${item.id}`}
+                          index={index}
+                        >
                           {(provided) => (
-                            <Card
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                            >
-                              <DragButton
-                                className="material-icons"
-                                {...provided.dragHandleProps}
-                              >
-                                menu
-                              </DragButton>
-                              <Field name={`items.${index}`}>
-                                {({ meta: { value } }: FieldProps<string>) => (
-                                  <Input value={value} />
-                                )}
-                              </Field>
-                            </Card>
+                            <Field name={`items.${index}.name`}>
+                              {({
+                                field,
+                                meta: { value },
+                              }: FieldProps<string>) => (
+                                <Card
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                >
+                                  <DragButton
+                                    className="material-icons"
+                                    {...provided.dragHandleProps}
+                                  >
+                                    menu
+                                  </DragButton>
+                                  <Input key={field.name} {...field} />
+                                </Card>
+                              )}
+                            </Field>
                           )}
                         </Draggable>
                       ))}
