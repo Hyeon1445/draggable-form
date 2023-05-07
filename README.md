@@ -3,6 +3,7 @@
 - react-beautiful-dnd
 - formik
 - yup
+- @emotion/styled
 
 <br />
 
